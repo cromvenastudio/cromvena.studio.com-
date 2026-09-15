@@ -45,10 +45,18 @@ h2{font-size:36px;line-height:1.1}
 .btn:hover{transform:translateY(-3px);border-color:#ff5a16}
 .primary{border:0;background:linear-gradient(135deg,#ff651b,#ff164f)}
 .hero-media{height:570px;position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(120deg,#1a1d21,#08090a);border:1px solid #252930;box-shadow:0 25px 80px rgba(0,0,0,.32)}
-.hero-media .house{width:100%;height:100%;object-fit:cover;filter:brightness(.72);will-change:transform}
+.hero-media .house{width:100%;height:100%;object-fit:cover;filter:brightness(.72);will-change:transform;display:block}
+.hero-video-bg .house{object-position:center center}
+.hero-video-glass{position:absolute;left:18px;top:18px;z-index:3;padding:7px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(5,6,8,.42);color:#f3f3f3;font-size:9px;font-weight:900;letter-spacing:.13em;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.22)}
 .shade{position:absolute;inset:0;background:linear-gradient(90deg,#070809 0%,transparent 42%,rgba(0,0,0,.08)),linear-gradient(0deg,rgba(0,0,0,.7),transparent 55%)}
 .play{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:#fff;color:#ff5b19;display:grid;place-items:center;font-size:26px;box-shadow:0 0 0 8px rgba(255,255,255,.14)}
 .showreel{position:absolute;left:50%;top:59%;transform:translateX(-50%);font-size:12px;font-weight:800}
+/* ===== AUTOPLAY HERO VIDEO ===== */
+.hero-video-bg:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 72% 42%,rgba(255,92,24,.12),transparent 28%),linear-gradient(90deg,rgba(7,8,9,.22),transparent 48%,rgba(7,8,9,.10));mix-blend-mode:screen}
+.hero-video-bg .play{z-index:4}
+.hero-video-bg .showreel{z-index:4}
+@media(max-width:560px){.hero-video-glass{left:12px;top:12px;font-size:8px;padding:6px 8px}}
+
 .avatars{display:flex;align-items:center}
 .avatar{width:35px;height:35px;border-radius:50%;border:2px solid #111;margin-left:-8px;background:#222;object-fit:cover;display:block}
 .avatars .plus{width:35px;height:35px;border-radius:50%;background:#ff5b17;display:grid;place-items:center;font-size:11px;font-weight:900;margin-left:-4px}
@@ -493,9 +501,12 @@ video{display:block;max-width:100%;background:#090a0c}
     </div>
   </div>
 
-  <div class="hero-media">
-    <img class="house" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85" alt="Luxury real estate">
+  <div class="hero-media hero-video-bg">
+    <video id="heroBackgroundVideo" class="house" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85" aria-label="Cromvena Studio showreel background video">
+      <source src="https://res.cloudinary.com/hpkqvzoo/video/upload/v1788252133/cd.mp4" type="video/mp4">
+    </video>
     <div class="shade"></div>
+    <div class="hero-video-glass">AUTO PLAY • SHOWREEL</div>
     <div class="play">▶</div>
     <div class="showreel">Play Showreel</div>
   </div>
@@ -753,6 +764,16 @@ video{display:block;max-width:100%;background:#090a0c}
 <script>
 /* ==================== PORTFOLIO ==================== */
 
+/*
+  =================================
+  EASY COMMERCIAL VIDEO ADDING
+  =================================
+  Put your MP4 inside the /videos/ folder.
+  Change ONLY the filename, for example:
+      video:"my-commercial.mp4"
+  The website automatically adds /videos/.
+  No other code needs to be changed.
+*/
 const projects = [
 
   /* REAL ESTATE */
@@ -807,56 +828,66 @@ const projects = [
     video:"https://res.cloudinary.com/hpkqvzoo/video/upload/v1788251922/k4.mp4"
   },
 
-  /* COMMERCIAL — VIDEO WILL BE ADDED LATER */
-  {title:"Commercial Brand Video",cat:"Commercial",sub:"Commercial • Coming Soon",video:""},
-  {title:"Product Commercial",cat:"Commercial",sub:"Commercial • Coming Soon",video:""},
-  {title:"Brand Advertisement",cat:"Commercial",sub:"Commercial • Coming Soon",video:""},
-  {title:"Cinematic Commercial",cat:"Commercial",sub:"Commercial • Coming Soon",video:""},
+  /* COMMERCIAL — ONLY TYPE YOUR MP4 FILE NAME BELOW.
+     Example: "my-commercial.mp4"
+     Keep the MP4 inside the "videos" folder.
+     You do NOT need to write any other code. */
+  {title:"Commercial Brand Video",cat:"Commercial",sub:"Commercial • 01:20",video:"videos/1.mp4"},
 
-  /* REELS — VIDEO WILL BE ADDED LATER */
-  {title:"Reels / Shorts Edit",cat:"Reels",sub:"Reels / Social • Coming Soon",video:""},
-  {title:"Instagram Reel",cat:"Reels",sub:"Reels / Social • Coming Soon",video:""},
-  {title:"YouTube Shorts",cat:"Reels",sub:"Reels / Social • Coming Soon",video:""},
+{title:"Product Commercial",cat:"Commercial",sub:"Commercial • 00:45",video:"videos/2.mp4"},
+
+{title:"Brand Advertisement",cat:"Commercial",sub:"Commercial • 00:30",video:"videos/3.mp4"},
+
+{title:"Cinematic Commercial",cat:"Commercial",sub:"Commercial • 01:10",video:"videos/4.mp4"},
+  /* REELS — PUT YOUR MP4 FILES IN /videos/ */
+  {title:"Reels / Shorts Edit",cat:"Reels",sub:"Reels / Social • 00:30",video:"videos/ty.mp4"},
+
+{title:"Instagram Reel",cat:"Reels",sub:"Reels / Social • 00:25",video:"videos/bg.mp4"},
+
+{title:"YouTube Shorts",cat:"Reels",sub:"Reels / Social • Coming Soon",video:""},
   {title:"Social Media Edit",cat:"Reels",sub:"Reels / Social • Coming Soon",video:""},
 
-  /* MOTION GRAPHICS — VIDEO WILL BE ADDED LATER */
-  {title:"Motion Graphics Ad",cat:"Motion Graphics",sub:"Motion Graphics • Coming Soon",video:""},
-  {title:"Logo Animation",cat:"Motion Graphics",sub:"Motion Graphics • Coming Soon",video:""},
-  {title:"Kinetic Typography",cat:"Motion Graphics",sub:"Motion Graphics • Coming Soon",video:""},
-  {title:"3D Motion Design",cat:"Motion Graphics",sub:"Motion Graphics • Coming Soon",video:""},
+  /* MOTION GRAPHICS — PUT YOUR MP4 FILES IN /videos/ */
+ {title:"Motion Graphics Ad",cat:"Motion Graphics",sub:"Motion Graphics • 00:30",video:"videos/Bkash.mp4"},
 
-  /* COLOR GRADING — VIDEO WILL BE ADDED LATER */
-  {title:"Cinematic Color Grade",cat:"Color Grading",sub:"Color Grading • Coming Soon",video:""},
-  {title:"Film Look Grade",cat:"Color Grading",sub:"Color Grading • Coming Soon",video:""},
-  {title:"Commercial Color Grade",cat:"Color Grading",sub:"Color Grading • Coming Soon",video:""},
-  {title:"Before & After Grade",cat:"Color Grading",sub:"Color Grading • Coming Soon",video:""},
+{title:"Motion Graphics Ad",cat:"Motion Graphics",sub:"Motion Graphics • 00:30",video:"videos/Milk.mp4"},
 
-  /* MUSIC VIDEO — VIDEO WILL BE ADDED LATER */
-  {title:"Music Video Edit",cat:"Music Video",sub:"Music Video • Coming Soon",video:""},
+{title:"Motion Graphics Ad",cat:"Motion Graphics",sub:"Motion Graphics • 00:30",video:"videos/ti.mp4"},
+
+{title:" App Ui Motion Design",cat:"Motion Graphics",sub:"Motion Graphics • 00:45",video:"videos/App ui.mp4"},
+
+  /* COLOR GRADING — PUT YOUR MP4 FILES IN /videos/ */
+   {title:"Before & After Grade",cat:"Color Grading",sub:"Color Grading • 00:30",video:"videos/cc.mov"},
+
+ {title:"Film Look Grade",cat:"Color Grading",sub:"Color Grading • Coming Soon",video:""},
+  {title:"Cinematic Color Grade",cat:"Color Grading",sub:"Color Grading • 00:45",video:"videos/cc.mov"},
+  
+{title:"Film Look Grade",cat:"Color Grading",sub:"Color Grading • 01:00",video:"videos/tt.mp4"},
+ {title:"Music Video Edit",cat:"Music Video",sub:"Music Video • Coming Soon",video:""},
   {title:"Cinematic Music Video",cat:"Music Video",sub:"Music Video • Coming Soon",video:""},
   {title:"Performance Video",cat:"Music Video",sub:"Music Video • Coming Soon",video:""},
   {title:"Lyrics Music Video",cat:"Music Video",sub:"Music Video • Coming Soon",video:""}
 ];
 
+/*
+  VIDEO SOURCE RULES
+  - Use the MP4 URL/path exactly as provided.
+  - NO Cloudinary q_auto / codec conversion is applied.
+  - NO automatic poster conversion is applied.
+  This keeps the video's original motion, frame timing and color intact.
+*/
 function videoPoster(url){
-  if(!url) return "";
-  return url
-    .replace("/video/upload/","/video/upload/so_0,f_jpg,q_auto/")
-    .replace(/\.(mp4|webm|mov)$/i,".jpg");
+  return "";
 }
 
-/* Cloudinary serves a browser-friendly H.264/AAC MP4 to phones.
-   Other video URLs are left unchanged. */
-function mobileVideoSrc(url){
-  if(!url) return "";
-  if(url.includes("res.cloudinary.com") && url.includes("/video/upload/")){
-    return url.replace(
-      "/video/upload/",
-      "/video/upload/f_mp4,vc_h264,ac_aac,q_auto/"
-    );
+function videoSrc(url){
+    if(!url) return "";
+    // If only an MP4 filename is entered, automatically use /videos/.
+    if(!url.includes("/") && /\.(mp4|webm|mov)$/i.test(url)){
+      return "videos/" + url;
+    }
+    return url;
   }
-  return url;
-}
 
 let current = "All";
 const grid = document.getElementById("portfolio");
@@ -877,12 +908,12 @@ function render(){
             `
               <div class="mobile-video-wrap">
                 <video
-                  src="${mobileVideoSrc(p.video)}"
+                  src="${videoSrc(p.video)}"
                   controls
                   playsinline
                   webkit-playsinline
                   preload="metadata"
-                  poster="${videoPoster(p.video)}"
+                  
                   onerror="this.style.display='none';this.parentElement.querySelector('.video-fallback').style.display='grid';"
                   aria-label="${p.title}">
                 </video>
@@ -893,8 +924,7 @@ function render(){
                   type="button"
                   title="Open large video"
                   aria-label="Open ${p.title} in large player"
-                  data-video="${mobileVideoSrc(p.video)}"
-                  data-poster="${videoPoster(p.video)}">⛶</button>
+                  data-video="${videoSrc(p.video)}">⛶</button>
 
                 <div
                   class="video-fallback"
@@ -909,7 +939,7 @@ function render(){
                   ">
                   <div>
                     <div class="coming-icon">▶</div>
-                    <div style="margin-top:10px;color:#aaa;font-size:10px;">Video unavailable</div>
+                    <div style="margin-top:10px;color:#aaa;font-size:10px;">MP4 not found — check the videos/ path</div>
                   </div>
                 </div>
               </div>
@@ -1067,6 +1097,28 @@ document.addEventListener("keydown", e => {
     closeVideoViewer();
   }
 });
+
+
+/* Autoplay hero background video — cycles through portfolio footage subtly */
+const heroBackgroundVideo = document.getElementById("heroBackgroundVideo");
+if(heroBackgroundVideo){
+  const heroClips = [
+    "https://res.cloudinary.com/hpkqvzoo/video/upload/v1788252133/cd.mp4",
+    "https://res.cloudinary.com/hpkqvzoo/video/upload/v1788251940/cf.mp4",
+    "https://res.cloudinary.com/hpkqvzoo/video/upload/v1788252133/df.mp4",
+    "https://res.cloudinary.com/hpkqvzoo/video/upload/v1788251928/we.mp4"
+  ];
+  let heroClipIndex = 0;
+  heroBackgroundVideo.muted = true;
+  heroBackgroundVideo.playsInline = true;
+  heroBackgroundVideo.play().catch(()=>{});
+  heroBackgroundVideo.addEventListener("ended", () => {
+    heroClipIndex = (heroClipIndex + 1) % heroClips.length;
+    heroBackgroundVideo.src = heroClips[heroClipIndex];
+    heroBackgroundVideo.load();
+    heroBackgroundVideo.play().catch(()=>{});
+  });
+}
 
 /* Initial portfolio render */
 render();
